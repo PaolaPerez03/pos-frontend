@@ -1,6 +1,6 @@
 <template>
   <div>
-    <NavbarAdmin />
+    <NavbarAdmin class="navbar-fijo"/>
 
     <div class="container mt-4">
       <h2 class="mb-4">Productos</h2>
@@ -76,6 +76,9 @@
             <label class="form-label">Stock</label>
             <input type="number" class="form-control mb-3" v-model.number="createForm.stock" />
 
+            <label class="form-label">Categoría</label>
+            <input type="text" class="form-control mb-3" v-model="createForm.categoria" />
+
             <label class="form-label">Descripción</label>
             <input type="text" class="form-control mb-3" v-model="createForm.descripcion" />
           </div>
@@ -110,6 +113,9 @@
             <label class="form-label">Stock</label>
             <input type="number" class="form-control mb-3" v-model.number="editForm.stock" />
 
+            <label class="form-label">Categoría</label>
+            <input type="text" class="form-control mb-3" v-model="editForm.categoria" />
+            
             <label class="form-label">Descripción</label>
             <input type="text" class="form-control mb-3" v-model="editForm.descripcion" />
           </div>
@@ -187,8 +193,8 @@ export default {
     return {
       products: [],
 
-      createForm: { codigo: "", nombre: "", precio: 0, stock: 0, descripcion: "" },
-      editForm: { id: null, codigo: "", nombre: "", precio: 0, stock: 0, descripcion: "" },
+      createForm: { codigo: "", nombre: "", precio: 0, stock: 0, categoria: "", descripcion: "" },
+      editForm: { id: null, codigo: "", nombre: "", precio: 0, stock: 0, categoria: "", descripcion: "" },
 
       productToDelete: null,
 
@@ -218,7 +224,7 @@ export default {
     },
 
     openCreateModal() {
-      this.createForm = { codigo: "", nombre: "", precio: 0, stock: 0, descripcion: "" };
+      this.createForm = { codigo: "", nombre: "", precio: 0, stock: 0, categoria: "", descripcion: "" };
       this.createModal.show();
     },
 
@@ -280,6 +286,13 @@ export default {
 </script>
 
 <style>
+/* ------- NAVBAR FIJO -------- */
+.navbar-fijo {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 2000;
+}
 .modal-header {
   border-bottom: none;
 }

@@ -57,6 +57,7 @@ onMounted(() => {
 function logout() {
   localStorage.removeItem("token")
   localStorage.removeItem("name")
+  localStorage.removeItem("role")
   router.push("/")
 }
 </script>

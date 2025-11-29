@@ -78,9 +78,21 @@ export default {
 
       try {
         const data = await login(this.email, this.password);
+        console.log("Datos de login:", data);
+        // GUARDAR TOKEN Y DATOS DEL USUARIO
         localStorage.setItem("token", data.token);
         localStorage.setItem("name", data.user.name);
-        this.$router.push("/products");
+        localStorage.setItem("role", data.user.role);
+        localStorage.setItem("userId", data.user.uid); 
+
+        // REDIRECCIONAR POR ROL
+        if (data.user.role === "admin") {
+          this.$router.push("/products");
+        } else if (data.user.role === "vendedor") {
+          this.$router.push("/vendedor/productos");
+        } else {
+          this.error = "Rol desconocido";
+        }
       } catch (err) {
         this.error = err.message || "Error al iniciar sesión";
       } finally {

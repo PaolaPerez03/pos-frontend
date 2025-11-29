@@ -1,8 +1,9 @@
 <template>
   <div>
-    <NavbarAdmin />
+    <NavbarAdmin class="navbar-fijo"/>
 
-    <div class="container mt-4">
+    <!-- Contenedor ajustado debajo del navbar -->
+    <div class="container contenedor-ajustado">
       <h2 class="mb-4">Usuarios</h2>
 
       <!-- Botón agregar -->
@@ -93,9 +94,10 @@
 
             <label class="form-label">Rol</label>
             <select class="form-control mb-3" v-model="editForm.role">
-              <option value="admin">admin</option>
-              <option value="vendedor">vendedor</option>
+              <option value="admin">Admin</option>
+              <option value="vendedor">Vendedor</option>
             </select>
+
             <label class="form-label">Contraseña</label>
             <input type="password" class="form-control mb-3" v-model="editForm.password">
           </div>
@@ -135,8 +137,6 @@
 <script>
 import NavbarAdmin from "../components/NavbarAdmin.vue";
 import { Modal } from "bootstrap";
-
-// APIs (debes crearlas igual que products)
 import {
   getUsers,
   addUser,
@@ -152,7 +152,7 @@ export default {
       users: [],
 
       createForm: { email: "", name: "", role: "", password: "" },
-      editForm: { id: null, email: "", name: "", role: "" },
+      editForm: { id: null, email: "", name: "", role: "", password: "" },
 
       userToDelete: null,
 
@@ -182,7 +182,6 @@ export default {
     },
 
     async createUser() {
-      console.log("📤 Enviando datos a createUser:", this.createForm);
       await addUser(this.createForm);
       this.createModal.hide();
       await this.loadUsers();
@@ -214,6 +213,20 @@ export default {
 </script>
 
 <style>
+/* ------- NAVBAR FIJO -------- */
+.navbar-fijo {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 2000;
+}
+
+/* Ajustar contenido debajo del navbar */
+.contenedor-ajustado {
+  margin-top: 90px; /* Ajusta si tu navbar es más alto */
+}
+
 .modal-header {
   border-bottom: none;
 }
