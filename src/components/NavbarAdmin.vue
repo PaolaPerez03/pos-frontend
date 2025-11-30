@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-light bg-light px-4">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light px-4 navbar-fijo">
     <div class="container-fluid">
 
       <!-- LINKS -->
@@ -11,10 +11,13 @@
           <li class="nav-item">
             <router-link to="/vendedores" class="nav-link">Vendedores</router-link>
           </li>
+          <li class="nav-item">
+            <router-link to="/reportes" class="nav-link">Reportes</router-link>
+          </li>
         </ul>
       </div>
 
-      <!-- 👤 NOMBRE DEL USUARIO -->
+      <!-- NOMBRE DEL USUARIO -->
       <span class="me-3 fw-bold text-primary">
         {{ userName }}
       </span>
@@ -48,10 +51,7 @@ const userName = ref("Usuario")
 
 onMounted(() => {
   const savedName = localStorage.getItem("name")
-  console.log("Nombre recibido:", savedName)
-  if (savedName) {
-    userName.value = savedName
-  }
+  if (savedName) userName.value = savedName
 })
 
 function logout() {
@@ -61,3 +61,12 @@ function logout() {
   router.push("/")
 }
 </script>
+
+<style scoped>
+.navbar-fijo {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 2000;
+}
+</style>

@@ -3,6 +3,7 @@ import Login from "../components/Login.vue";
 import Products from "../views/Products.vue"; // ADMIN
 import Vendedores from "../views/Vendedores.vue"; // ADMIN
 import ProductsVendedor from "../views/ProductsVendedor.vue"; // NUEVA VISTA
+import Reportes from "../views/ReportesView.vue"; // ADMIN
 
 const routes = [
   {
@@ -21,6 +22,13 @@ const routes = [
   {
     path: "/vendedores",
     component: Vendedores,
+    meta: { requiresAuth: true, role: "admin" }
+  },
+
+  // RUTA ADMIN
+  {
+    path: "/reportes",
+    component: Reportes,
     meta: { requiresAuth: true, role: "admin" }
   },
 

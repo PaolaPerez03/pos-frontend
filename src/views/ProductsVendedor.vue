@@ -250,6 +250,48 @@ export default {
   },
 
   methods: {
+    generarTicket(venta, items) {
+      const fecha = new Date().toLocaleString("es-MX");
+      let ticket = `
+        <style>
+          body { font-family: monospace; padding: 10px; }
+          .center { text-align: center; }
+          .line { border-top: 1px dashed #000; margin: 8px 0; }
+        </style>
+
+        <div class="center">
+          <h3>TIENDA XYZ</h3>
+          <p>Venta #${venta.folio || venta.id}</p>
+          <p>${fecha}</p>
+        </div>
+
+        <div class="line"></div>
+        <strong>Artículos</strong><br>
+      `;
+
+      items.forEach(i => {
+        ticket += `
+          ${i.nombre} x${i.cantidad}  $${i.precio * i.cantidad}<br>
+        `;
+      });
+
+      ticket += `
+        <div class="line"></div>
+        <strong>Total:</strong> $${venta.total}<br>
+        <strong>Pago:</strong> ${venta.metodo_pago}<br>
+        <strong>Recibido:</strong> $${venta.recibe}<br>
+        <strong>Cambio:</strong> $${venta.cambio}<br>
+        <div class="line"></div>
+        <div class="center">¡Gracias por su compra!</div>
+      `;
+
+      const ventana = window.open("", "_blank", "width=400,height=600");
+      ventana.document.write(ticket);
+      ventana.document.close();
+      ventana.print();
+      ventana.close();
+    },
+
     // 🟢 SOLO ABRIR MODAL
     async abrirCorte() {
       try {
@@ -414,9 +456,14 @@ export default {
           await descontarStock(item.id, item.cantidad);
         }
 
-        alert("Venta registrada y stock actualizado");
+        // 🟢 GENERAR TICKET
+        this.generarTicket(ventaCreada, this.carrito.items);
+
+        // Vaciar carrito y cerrar modal
         carrito.vaciar();
         this.cerrarModalVenta();
+        alert("Venta registrada");
+
       } catch (error) {
         console.error(error);
         alert("Error al registrar la venta");
